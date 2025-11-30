@@ -68,7 +68,7 @@ func writePgmImage(filename string, data []uint8, width, height int) {
 
 // readPgmImage opens a pgm file and sends its data as an array of bytes.
 func readPgmImage(filename string, width, height int) []uint8 {
-	path := "images/" + filename + ".pgm"
+	path := "../images/" + filename + ".pgm"
 	f, err := os.Open(path)
 	util.Check(err)
 	defer f.Close()
