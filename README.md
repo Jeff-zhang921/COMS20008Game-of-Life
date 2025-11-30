@@ -1,8 +1,6 @@
 <div align="center">
 
-# 🎮 Conway's Game of Life
-
-### *A High-Performance Concurrent & Distributed Implementation in Go*
+![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=180&section=header&text=Conway%27s%20Game%20of%20Life&fontSize=42&fontColor=fff&animation=fadeIn&fontAlignY=32&desc=A%20High-Performance%20Concurrent%20%26%20Distributed%20Implementation%20in%20Go&descSize=18&descAlignY=52)
 
 <br>
 
@@ -10,18 +8,27 @@
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 ![Platform](https://img.shields.io/badge/Platform-AWS%20%7C%20Local-orange?style=for-the-badge&logo=amazon-aws)
 ![University](https://img.shields.io/badge/University%20of%20Bristol-COMS20008-red?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/Jeff-zhang921/COMS20008Game-of-Life?style=for-the-badge&logo=github&color=yellow)
 
 <br>
 
-<img src="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif" alt="Game of Life Animation" width="400">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif">
+  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif">
+  <img alt="Game of Life Animation" src="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif" width="450">
+</picture>
 
 <br>
 
-*Experience the mesmerizing patterns of cellular automaton with lightning-fast parallel processing*
+### ✨ *Experience the mesmerizing patterns of cellular automaton with lightning-fast parallel processing* ✨
 
 <br>
 
 **👨‍💻 Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • [Lingyi Lu](https://github.com/)
+
+<br>
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Jeff-zhang921&repo=COMS20008Game-of-Life&theme=radical)](https://github.com/Jeff-zhang921/COMS20008Game-of-Life)
 
 ---
 
@@ -32,6 +39,9 @@
 <br>
 
 ## ✨ Features
+
+> [!TIP]
+> 🎯 Our implementation achieves **9.5× speedup** over baseline through innovative flip-cell algorithms!
 
 <table>
 <tr>
@@ -56,15 +66,24 @@
 </tr>
 </table>
 
+<div align="center">
+
+![Gosper Glider Gun](https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif)
+
+*Gosper's Glider Gun — a classic pattern that produces gliders indefinitely*
+
+</div>
+
 <br>
 
 ---
 
 ## 🏗️ Architecture
 
-### System Overview
+> [!NOTE]
+> Our implementation features a sophisticated **multi-layered architecture** designed for maximum performance and reliability.
 
-Our implementation features a sophisticated **multi-layered architecture** designed for maximum performance and reliability.
+### System Overview
 
 <br>
 
@@ -83,6 +102,9 @@ Our implementation features a sophisticated **multi-layered architecture** desig
 <br>
 
 ### 🔄 How the Parallel Algorithm Works
+
+> [!IMPORTANT]
+> The flip-cell algorithm is our key innovation — instead of checking all cells every turn, we only check neighbors of cells that changed!
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -147,6 +169,9 @@ Our implementation features a sophisticated **multi-layered architecture** desig
 ---
 
 ## 📈 Performance Benchmarks
+
+> [!NOTE]
+> 📊 **Benchmark Environment**: Intel Core i7, 16GB RAM, Ubuntu 22.04
 
 Our optimizations deliver **exceptional performance gains** across different workloads and configurations.
 
@@ -217,15 +242,17 @@ Our optimizations deliver **exceptional performance gains** across different wor
 |:-------:|:---------|:----------------|:-------:|
 | **V1** | Basic parallel workers with neighbor counting | Baseline implementation | 1.0× |
 | **V2** | Enhanced I/O operations | Improved file handling | 1.2× |
-| **V3** | Flip-cell neighbor tracking | Reduced computation scope | **8.8×** |
+| **V3** | Flip-cell neighbor tracking | Reduced computation scope | **8.8×** 🔥 |
 | **V4** | Efficient slice usage | Reduced GC pressure | 9.1× |
-| **Final** | Optimized goroutine coordination | Channel-based sync | **9.5×** |
+| **Final** | Optimized goroutine coordination | Channel-based sync | **9.5×** 🚀 |
 
 <br>
 
 ---
 
 ## 🎯 Key Design Advantages
+
+<img align="right" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_loaf.svg" width="100" alt="Loaf Pattern">
 
 <table>
 <tr>
@@ -289,6 +316,9 @@ Our optimizations deliver **exceptional performance gains** across different wor
 
 ## 🚀 Quick Start
 
+> [!CAUTION]
+> Make sure you have **Go 1.17+** and **SDL2** installed before running the project!
+
 ### Prerequisites
 
 ```bash
@@ -313,6 +343,9 @@ go run . -t 8 -w 512 -h 512
 ```
 
 ### Running the Distributed Version
+
+> [!WARNING]
+> For distributed mode, ensure your AWS security groups allow the required ports and all nodes can communicate!
 
 ```bash
 cd Distributed
@@ -395,6 +428,9 @@ go run . -t 8 -w 512 -h 512
 
 ## 🧪 Testing
 
+> [!TIP]
+> Always run tests with `-race` flag to detect potential race conditions in concurrent code!
+
 Run the complete test suite with race detection:
 
 ```bash
@@ -415,6 +451,8 @@ go test -v -race ./...
 
 <div align="center">
 
+> *"The flip-cell optimization taught us that clever algorithms can outperform brute-force parallelism"*
+
 | Insight | Description |
 |:--------|:------------|
 | 🎯 **Parallelism Has Costs** | Coordination overhead can negate benefits for small workloads |
@@ -424,11 +462,22 @@ go test -v -race ./...
 
 </div>
 
+<div align="center">
+
+![Pulsar](https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif)
+
+*The Pulsar — a period-3 oscillator, one of the most common oscillators in Game of Life*
+
+</div>
+
 <br>
 
 ---
 
 ## 📚 Documentation
+
+> [!NOTE]
+> 📖 Check out our detailed technical report for in-depth analysis of the implementation!
 
 - 📖 [Official GOL Documentation](https://uob-csa.github.io/gol-docs/)
 - 📊 [Project Presentation](docs/GOL.pptx)
@@ -446,11 +495,25 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 <br>
 
+### 🤝 Contributing
+
+We welcome contributions! Feel free to:
+- ⭐ Star this repository
+- 🐛 Report bugs
+- 💡 Suggest new features
+- 🔀 Submit pull requests
+
+<br>
+
 ---
 
 <br>
 
 **⭐ Star this repo if you found it helpful!**
+
+<br>
+
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3000&pause=1000&color=00ADD8&center=true&vCenter=true&width=500&lines=Thanks+for+visiting!+%F0%9F%8E%AE;Made+with+%E2%9D%A4%EF%B8%8F+at+University+of+Bristol;Go+is+awesome+for+concurrency!)
 
 
 
