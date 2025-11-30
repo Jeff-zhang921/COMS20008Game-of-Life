@@ -452,11 +452,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 **⭐ Star this repo if you found it helpful!**
 
-<br>
 
-Made with ❤️ at the University of Bristol
-
-<br>
 
 ![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=100&section=footer)
 
