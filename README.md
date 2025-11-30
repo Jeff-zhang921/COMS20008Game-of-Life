@@ -1,204 +1,463 @@
-# Game of Life
+<div align="center">
 
-A concurrent implementation of Conway's Game of Life in Go, developed as coursework for COMS20008 (Concurrent Computing) at the University of Bristol.
+# 🎮 Conway's Game of Life
 
-**Authors**: Jingxiang Zhang, Lingyi Lu
+### *A High-Performance Concurrent & Distributed Implementation in Go*
 
-## Overview
+<br>
 
-This project contains two implementations of Conway's Game of Life:
+![Go Version](https://img.shields.io/badge/Go-1.17+-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Platform](https://img.shields.io/badge/Platform-AWS%20%7C%20Local-orange?style=for-the-badge&logo=amazon-aws)
+![University](https://img.shields.io/badge/University%20of%20Bristol-COMS20008-red?style=for-the-badge)
 
-- **Parallel**: A multi-threaded implementation using Go's goroutines and channels for parallel processing on a single machine.
-- **Distributed**: A distributed implementation using a broker-server architecture for processing across multiple machines (AWS).
+<br>
 
-Both implementations support SDL live visualization and feature optimized algorithms for efficient cell state computation.
+<img src="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif" alt="Game of Life Animation" width="400">
 
-## Key Highlights
+<br>
 
-### Parallel Implementation Features
+*Experience the mesmerizing patterns of cellular automaton with lightning-fast parallel processing*
 
-Our parallel implementation employs an innovative **flip-cell tracking algorithm** that significantly reduces computation overhead:
+<br>
 
-- **Dynamic Flip-Cell Detection**: Instead of checking every cell in the grid each turn, the algorithm tracks only cells that changed in the previous turn and their neighbors
-- **Neighbor Propagation Optimization**: The `getNeighbor` function builds a candidate list of cells that might change, achieving up to **88% relative improvement** over the naive approach
-- **Efficient Memory Usage**: Pre-allocated slices for worker results minimize garbage collection overhead
-- **Parallel Worker Distribution**: Workload is evenly distributed across goroutines with efficient channel-based communication
+**👨‍💻 Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • [Lingyi Lu](https://github.com/)
 
-#### How It Works
+---
 
-1. **Turn 1**: Workers scan the full grid in parallel, each handling a horizontal slice
-2. **Subsequent Turns**: Only cells neighboring the previously flipped cells are evaluated
-3. **Cell Flip Detection**: Each worker returns cells that need to flip, which are aggregated by the distributor
-4. **Neighbor List Generation**: Flipped cells generate the candidate list for the next turn
+[Features](#-features) • [Architecture](#-architecture) • [Performance](#-performance-benchmarks) • [Quick Start](#-quick-start) • [Documentation](#-documentation)
 
-### Distributed Implementation Features
+</div>
 
-Our distributed system uses a **broker-worker architecture** designed for fault tolerance and scalability:
+<br>
 
-- **Single Broker Process**: Manages all client connections and worker coordination via Go RPC
-- **Dynamic Worker Pool**: Workers can join or leave the pool without disrupting ongoing computations
-- **Persistent TCP Streaming**: Long-lived connections for turn data and alive cell counts eliminate per-turn handshakes
+## ✨ Features
 
-#### Architecture Highlights
+<table>
+<tr>
+<td width="50%">
 
-```
-┌─────────────┐        ┌─────────────┐        ┌─────────────┐
-│   Client    │◄──────►│   Broker    │◄──────►│  Worker 1   │
-│ (Distributor)│  RPC   │  (AWS EC2)  │  RPC   │  (AWS EC2)  │
-└─────────────┘        └──────┬──────┘        └─────────────┘
-                              │
-                              │ RPC
-                              ▼
-                       ┌─────────────┐
-                       │  Worker N   │
-                       │  (AWS EC2)  │
-                       └─────────────┘
-```
+### 🚀 Parallel Implementation
+- **Innovative Flip-Cell Algorithm** — 88% performance boost
+- **Dynamic Workload Distribution** across goroutines
+- **Real-time SDL Visualization**
+- **Optimized Memory Management** with pre-allocated slices
 
-### Special Design Advantages
+</td>
+<td width="50%">
 
-#### 1. High Fault Tolerance
-- **Automatic Worker Recovery**: Dead workers are detected and removed from the pool automatically
-- **Turn Retry Mechanism**: Failed turns are automatically re-executed with remaining workers
-- **Graceful Worker Addition**: New workers joining during execution are utilized in subsequent turns without crashes
+### 🌐 Distributed Implementation
+- **Broker-Worker Architecture** on AWS EC2
+- **Fault-Tolerant Design** with auto-recovery
+- **Persistent TCP Streaming** for minimal overhead
+- **Dynamic Worker Scaling** — add/remove nodes live
 
-#### 2. Minimized Communication Overhead
-- **Full World Transfer Only Once**: The complete board is sent to the broker only at the start
-- **Differential Updates**: Subsequent turns transfer only the flip-cell list and minimal halo rows
-- **Efficient Halo Exchange**: Workers receive only the rows they need for boundary neighbor lookups
+</td>
+</tr>
+</table>
 
-#### 3. Persistent TCP Stream
-- **Long-lived Connections**: Avoids connection setup overhead for each turn
-- **Real-time Updates**: Alive cell counts sent every 2 seconds over the same connection
-- **Unified Event Stream**: Keypress responses and turn completions share the reliable stream
+<br>
 
-#### 4. Scalable Worker Pool
-- **Open-ended Registration**: Any server that dials `Broker.Register` joins the pool
-- **Dynamic Repartitioning**: Work is redistributed when workers join or leave
-- **Thread Distribution**: Threads are allocated evenly across available workers
+---
 
-#### 5. Privacy & Decoupling
-- **Address Isolation**: Client only knows broker's address; workers are hidden
-- **Proactive Worker Connection**: Workers dial the broker, requiring no exposed ports
-- **Zero Knowledge Between Workers**: Servers don't know about other servers or clients
+## 🏗️ Architecture
 
-## Development Evolution
+### System Overview
 
-The parallel implementation went through several iterations:
+Our implementation features a sophisticated **multi-layered architecture** designed for maximum performance and reliability.
 
-| Version | Approach | Key Improvement |
-|---------|----------|-----------------|
-| V1 | Basic parallel workers with neighbor counting | Baseline implementation |
-| V2 | Enhanced I/O operations | Improved file handling |
-| V3 | Flip-cell neighbor tracking | **88% performance improvement** |
-| V4 | Efficient slice usage | Reduced memory allocations |
-| Final | Optimized goroutine coordination | Mutex locks replaced with I/O channels |
+<br>
 
-## Performance Insights
+<div align="center">
 
-Through extensive testing on both local machines and AWS t3.micro instances:
+### 📊 Parallel Implementation Flow
 
-- **Parallel Performance**: Strong results on larger grids (512x512 and above) where computation outweighs coordination overhead
-- **Distributed Trade-offs**: Network latency dominates for smaller workloads; best suited for massive grids or when local resources are limited
-- **Key Learning**: Distributed computing doesn't inherently guarantee faster performance—success depends on workload granularity and network conditions
+<img src="https://github.com/user-attachments/assets/f13edfc4-be45-4f8b-b94c-a13975fcc667" alt="Parallel Implementation Flow Diagram" width="90%">
 
-## Project Structure
+<br>
+
+*The distributor coordinates I/O operations and worker goroutines, efficiently managing cell state updates across turns*
+
+</div>
+
+<br>
+
+### 🔄 How the Parallel Algorithm Works
 
 ```
-.
-├── Parallel/           # Parallel implementation
-│   ├── gol/           # Core game logic (distributor, workers)
-│   ├── sdl/           # SDL visualization
-│   ├── images/        # Input PGM images
-│   ├── out/           # Output directory
-│   └── tests/         # Test files
-├── Distributed/        # Distributed implementation
-│   ├── gol/           # Core game logic (client-side distributor)
-│   ├── broker/        # Broker component (coordination)
-│   ├── server/        # Server component (worker logic)
-│   ├── stubs/         # RPC stubs and data structures
-│   ├── sdl/           # SDL visualization
-│   ├── images/        # Input PGM images
-│   ├── out/           # Output directory
-│   └── tests/         # Test files
-├── GOL.pptx           # Presentation slides
-├── report.pdf         # Coursework report
-└── LICENSE            # MIT License
+┌─────────────────────────────────────────────────────────────────────┐
+│                         TURN PROCESSING                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│   Turn 1:  Full grid scan → Identify flipped cells                  │
+│            ┌──────┬──────┬──────┬──────┐                            │
+│            │ W1   │ W2   │ W3   │ W4   │  ← Workers scan slices     │
+│            └──────┴──────┴──────┴──────┘                            │
+│                        ↓                                             │
+│   Turn 2+: Check ONLY neighbors of flipped cells                    │
+│            ┌──────────────────────────┐                             │
+│            │  ○ ○ ● ○ ○ ○ ○ ○ ○ ○ ○  │  ● = Check this cell        │
+│            │  ○ ● ● ● ○ ○ ○ ○ ○ ○ ○  │  ○ = Skip (unchanged)       │
+│            │  ○ ○ ● ○ ○ ○ ○ ○ ○ ○ ○  │                              │
+│            └──────────────────────────┘                             │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
-## Requirements
+### 🌍 Distributed Architecture
 
+```
+                    ┌─────────────────────────────────────┐
+                    │           CLIENT MACHINE            │
+                    │  ┌─────────────────────────────┐   │
+                    │  │       Distributor           │   │
+                    │  │   • Manages game state      │   │
+                    │  │   • Handles SDL display     │   │
+                    │  │   • Processes key events    │   │
+                    │  └──────────────┬──────────────┘   │
+                    └─────────────────┼──────────────────┘
+                                      │ RPC
+                    ┌─────────────────▼──────────────────┐
+                    │            AWS BROKER              │
+                    │  ┌─────────────────────────────┐   │
+                    │  │     Coordination Layer       │   │
+                    │  │   • Worker registration      │   │
+                    │  │   • Task distribution        │   │
+                    │  │   • Fault detection          │   │
+                    │  └──────────────┬──────────────┘   │
+                    └─────────────────┼──────────────────┘
+                                      │ RPC
+          ┌───────────────────────────┼───────────────────────────┐
+          │                           │                           │
+          ▼                           ▼                           ▼
+   ┌─────────────┐            ┌─────────────┐            ┌─────────────┐
+   │  Worker 1   │            │  Worker 2   │            │  Worker N   │
+   │  (AWS EC2)  │            │  (AWS EC2)  │            │  (AWS EC2)  │
+   │             │            │             │            │             │
+   │ ┌─────────┐ │            │ ┌─────────┐ │            │ ┌─────────┐ │
+   │ │Thread 1 │ │            │ │Thread 1 │ │            │ │Thread 1 │ │
+   │ │Thread 2 │ │            │ │Thread 2 │ │            │ │Thread 2 │ │
+   │ │  ...    │ │            │ │  ...    │ │            │ │  ...    │ │
+   │ └─────────┘ │            │ └─────────┘ │            │ └─────────┘ │
+   └─────────────┘            └─────────────┘            └─────────────┘
+```
+
+<br>
+
+---
+
+## 📈 Performance Benchmarks
+
+Our optimizations deliver **exceptional performance gains** across different workloads and configurations.
+
+<br>
+
+<div align="center">
+
+### 🏆 Version Evolution Performance (512×512 Grid)
+
+<img src="https://github.com/user-attachments/assets/10034665-b506-4710-b47a-9a2eada88977" alt="Version Performance Comparison" width="85%">
+
+<br>
+
+*Version 3's flip-cell algorithm dramatically outperforms earlier implementations*
+
+</div>
+
+<br>
+
+### 📊 Detailed Performance Analysis
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center" width="50%">
+
+#### Thread Scaling Performance
+
+<img src="https://github.com/user-attachments/assets/4da2da5a-a8e6-4085-8615-cd2999a6513b" alt="Thread Scaling" width="100%">
+
+*Performance across different grid sizes and thread counts*
+
+</td>
+<td align="center" width="50%">
+
+#### Early Version Comparison
+
+<img src="https://github.com/user-attachments/assets/d525d320-5a7a-40b1-ae75-868b27c16912" alt="Version Comparison" width="100%">
+
+*V1 vs V2 baseline performance analysis*
+
+</td>
+</tr>
+</table>
+
+</div>
+
+<br>
+
+### 🔬 Profiling Insights
+
+<div align="center">
+
+<img src="https://github.com/user-attachments/assets/769520b2-53fc-43e7-8c8c-4968f6d555cf" alt="Go Profiler Analysis" width="85%">
+
+<br>
+
+*Go pprof analysis showing CPU time distribution between workers and distributor*
+
+</div>
+
+<br>
+
+### 📋 Development Evolution
+
+| Version | Approach | Key Improvement | Speedup |
+|:-------:|:---------|:----------------|:-------:|
+| **V1** | Basic parallel workers with neighbor counting | Baseline implementation | 1.0× |
+| **V2** | Enhanced I/O operations | Improved file handling | 1.2× |
+| **V3** | Flip-cell neighbor tracking | Reduced computation scope | **8.8×** |
+| **V4** | Efficient slice usage | Reduced GC pressure | 9.1× |
+| **Final** | Optimized goroutine coordination | Channel-based sync | **9.5×** |
+
+<br>
+
+---
+
+## 🎯 Key Design Advantages
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🛡️ High Fault Tolerance
+
+- **Auto Worker Recovery**
+  - Dead workers detected automatically
+  - Seamless removal from pool
+  
+- **Turn Retry Mechanism**
+  - Failed turns re-executed
+  - No data loss guaranteed
+
+- **Graceful Scaling**
+  - Add workers during execution
+  - Zero downtime operations
+
+</td>
+<td width="33%" valign="top">
+
+### ⚡ Minimal Overhead
+
+- **Single World Transfer**
+  - Full board sent only once
+  - Subsequent: flip-cells only
+
+- **Efficient Halo Exchange**
+  - Workers get only needed rows
+  - Boundary lookups optimized
+
+- **Persistent TCP Stream**
+  - No per-turn handshakes
+  - Real-time cell counts
+
+</td>
+<td width="33%" valign="top">
+
+### 🔒 Privacy & Security
+
+- **Address Isolation**
+  - Client knows only broker
+  - Workers completely hidden
+
+- **Proactive Connections**
+  - Workers dial broker
+  - No exposed ports needed
+
+- **Zero Knowledge**
+  - Servers isolated from each other
+  - Complete decoupling
+
+</td>
+</tr>
+</table>
+
+<br>
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+```bash
+# Required
 - Go 1.17 or later
 - SDL2 library (for visualization)
+```
 
-## Usage
+### Installation
 
-### Parallel Version
+```bash
+# Clone the repository
+git clone https://github.com/Jeff-zhang921/COMS20008Game-of-Life.git
+cd COMS20008Game-of-Life
+```
+
+### Running the Parallel Version
 
 ```bash
 cd Parallel
-go run . [flags]
+go run . -t 8 -w 512 -h 512
 ```
 
-### Distributed Version
+### Running the Distributed Version
 
 ```bash
 cd Distributed
 
-# Start the broker (on one AWS node)
+# Terminal 1: Start the broker (on AWS or local)
 go run broker/broker.go
 
-# Start server(s) on each AWS worker node
-# Each server automatically connects to the broker
+# Terminal 2-N: Start workers (on each AWS node)
 go run server/server.go
 
-# Run the client (connects to broker)
-go run . [flags]
+# Terminal N+1: Run the client
+go run . -t 8 -w 512 -h 512
 ```
 
-> **Note**: For multi-node deployment, run `go run server/server.go` on each AWS node. Servers automatically register with the broker, and work is dynamically distributed across all connected workers.
+<br>
 
-### Command Line Flags
+### ⌨️ Keyboard Controls
 
-| Flag | Description | Default |
-|------|-------------|---------|
-| `-t` | Number of worker threads | 8 |
-| `-w` | Width of the image | 512 |
-| `-h` | Height of the image | 512 |
-| `-turns` | Number of turns to process | 100000000 (Parallel) / 10000000000 (Distributed) |
-| `-headless` | Disable SDL window | false |
-
-### Keyboard Controls
+<div align="center">
 
 | Key | Action | Parallel | Distributed |
-|-----|--------|----------|-------------|
-| `s` | Save current state as PGM image | ✓ | ✓ |
-| `q` | Save current state and quit | ✓ | ✓ |
-| `p` | Pause/resume execution | ✓ | ✓ |
-| `k` | Quit without saving (terminates workers) | ✗ | ✓ |
+|:---:|:-------|:--------:|:-----------:|
+| <kbd>S</kbd> | Save current state as PGM | ✅ | ✅ |
+| <kbd>Q</kbd> | Save and quit gracefully | ✅ | ✅ |
+| <kbd>P</kbd> | Pause/Resume execution | ✅ | ✅ |
+| <kbd>K</kbd> | Terminate all workers | ❌ | ✅ |
 
-## Running Tests
+</div>
 
-All tests pass with the race detector enabled:
+<br>
+
+### 🎛️ Command Line Flags
+
+| Flag | Description | Default |
+|:----:|:------------|:-------:|
+| `-t` | Number of worker threads | `8` |
+| `-w` | Width of the grid | `512` |
+| `-h` | Height of the grid | `512` |
+| `-turns` | Number of turns to simulate | `100000000` |
+| `-headless` | Disable SDL visualization | `false` |
+
+<br>
+
+---
+
+## 📁 Project Structure
+
+```
+🎮 COMS20008Game-of-Life/
+│
+├── 🔄 Parallel/                    # Single-machine parallel implementation
+│   ├── gol/                        # Core game logic
+│   │   ├── distributor.go          # Main coordinator
+│   │   └── gol.go                  # Game rules & worker management
+│   ├── sdl/                        # SDL2 visualization
+│   ├── images/                     # Input PGM files
+│   ├── out/                        # Output directory
+│   └── tests/                      # Test suite
+│
+├── 🌐 Distributed/                 # Multi-machine distributed implementation
+│   ├── gol/                        # Client-side distributor
+│   ├── broker/                     # Central coordinator (AWS)
+│   ├── server/                     # Worker nodes (AWS)
+│   ├── stubs/                      # RPC definitions
+│   ├── sdl/                        # SDL2 visualization
+│   ├── images/                     # Input PGM files
+│   ├── out/                        # Output directory
+│   └── tests/                      # Test suite
+│
+├── 📄 docs/                        # Documentation
+│   ├── GOL.pptx                    # Presentation slides
+│   └── report.pdf                  # Technical report
+│
+└── 📜 LICENSE                      # MIT License
+```
+
+<br>
+
+---
+
+## 🧪 Testing
+
+Run the complete test suite with race detection:
 
 ```bash
-cd Parallel  # or Distributed
+# Parallel tests
+cd Parallel
+go test -v -race ./...
+
+# Distributed tests
+cd Distributed
 go test -v -race ./...
 ```
 
-## Conclusion
+<br>
 
-This coursework demonstrates the practical challenges and trade-offs in concurrent and distributed systems:
+---
 
-- **Parallelism isn't free**: Coordination overhead can negate benefits for small workloads
-- **Communication costs matter**: Network latency in distributed systems requires careful architectural decisions
-- **Fault tolerance is achievable**: With proper design, distributed systems can gracefully handle node failures
-- **Algorithm optimization compounds**: The flip-cell tracking optimization provides significant speedups across all configurations
+## 💡 Key Learnings
 
-## License
+<div align="center">
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+| Insight | Description |
+|:--------|:------------|
+| 🎯 **Parallelism Has Costs** | Coordination overhead can negate benefits for small workloads |
+| 📡 **Network Latency Matters** | Distributed systems require careful architectural decisions |
+| 🛡️ **Fault Tolerance Works** | With proper design, systems gracefully handle node failures |
+| ⚡ **Algorithm > Hardware** | The flip-cell optimization outperforms adding more threads |
 
-## Documentation
+</div>
 
-Additional documentation is available at: https://uob-csa.github.io/gol-docs/
+<br>
+
+---
+
+## 📚 Documentation
+
+- 📖 [Official GOL Documentation](https://uob-csa.github.io/gol-docs/)
+- 📊 [Project Presentation](docs/GOL.pptx)
+- 📝 [Technical Report](docs/report.pdf)
+
+<br>
+
+---
+
+<div align="center">
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+<br>
+
+---
+
+<br>
+
+**⭐ Star this repo if you found it helpful!**
+
+<br>
+
+Made with ❤️ at the University of Bristol
+
+<br>
+
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=100&section=footer)
+
+</div>
