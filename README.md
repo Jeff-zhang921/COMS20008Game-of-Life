@@ -1,10 +1,11 @@
 <div align="center">
 
-![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,3,4,6,24,30&height=200&section=header&text=Conway%27s%20Game%20of%20Life&fontSize=45&fontColor=fff&animation=twinkling&fontAlignY=35&desc=A%20High-Performance%20Concurrent%20%26%20Distributed%20Implementation%20in%20Go&descSize=18&descAlignY=55)
+![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,3,4,6,24,30&height=200&section=header&text=Conway's%20Game%20of%20Life&fontSize=45&fontColor=fff&animation=twinkling&fontAlignY=35&desc=High-Performance%20Go%20Implementation&descSize=18&descAlignY=55)
 
 <br>
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=Jeff-zhang921&repo=COMS20008Game-of-Life&color=blueviolet&style=for-the-badge&label=VISITORS)
+[![GitHub followers](https://img.shields.io/github/followers/Jeff-zhang921?style=for-the-badge&logo=github&color=blue)](https://github.com/Jeff-zhang921)
 
 <br>
 
@@ -13,6 +14,7 @@
 ![Platform](https://img.shields.io/badge/Platform-AWS%20%7C%20Local-orange?style=for-the-badge&logo=amazon-aws)
 ![University](https://img.shields.io/badge/University%20of%20Bristol-COMS20008-red?style=for-the-badge)
 ![Stars](https://img.shields.io/github/stars/Jeff-zhang921/COMS20008Game-of-Life?style=for-the-badge&logo=github&color=yellow)
+![Forks](https://img.shields.io/github/forks/Jeff-zhang921/COMS20008Game-of-Life?style=for-the-badge&logo=github&color=purple)
 
 <br>
 
@@ -511,9 +513,15 @@ We welcome contributions! Feel free to:
 
 **⭐ Star this repo if you found it helpful!**
 
+[![Star History Chart](https://api.star-history.com/svg?repos=Jeff-zhang921/COMS20008Game-of-Life&type=Date)](https://star-history.com/#Jeff-zhang921/COMS20008Game-of-Life&Date)
+
 <br>
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3000&pause=1000&color=FF6B6B&center=true&vCenter=true&width=500&lines=Thanks+for+visiting!+%F0%9F%8E%AE;Made+with+%E2%9D%A4%EF%B8%8F+at+University+of+Bristol;Go+is+awesome+for+concurrency!;Star+%E2%AD%90+if+you+like+it!)
+![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Jeff-zhang921&theme=react-dark&hide_border=true&area=true)
+
+<br>
+
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3000&pause=1000&color=FF6B6B&center=true&vCenter=true&width=500&lines=Thanks+for+visiting!+%F0%9F%8E%AE;Made+with+%E2%9D%A4%EF%B8%8F+at+University+of+Bristol;Go+is+awesome+for+concurrency!;Star+%E2%AD%90+if+you+like+it!;Click+the+star+button+above!)
 
 
 
