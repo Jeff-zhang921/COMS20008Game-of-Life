@@ -18,7 +18,11 @@
 
 <br>
 
-<img alt="Game of Life Animation" src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif" width="450">
+<img alt="Game of Life Blinker" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif" width="100">
+<img alt="Game of Life Glider" src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif" width="100">
+<img alt="Game of Life Pulsar" src="https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif" width="150">
+<img alt="Game of Life Beacon" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif" width="100">
+<img alt="Game of Life Toad" src="https://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif" width="100">
 
 <br>
 
