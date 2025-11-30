@@ -12,11 +12,7 @@
 
 <br>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif">
-  <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif">
-  <img alt="Game of Life Animation" src="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif" width="450">
-</picture>
+<img alt="Game of Life Animation" src="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif" width="450">
 
 <br>
 
@@ -24,7 +20,7 @@
 
 <br>
 
-**👨‍💻 Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • [Lingyi Lu](https://github.com/)
+**👨‍💻 Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • Lingyi Lu
 
 <br>
 
