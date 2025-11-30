@@ -1,8 +1,6 @@
 <div align="center">
 
-# 🎮 Conway's Game of Life
-
-### A High-Performance Concurrent & Distributed Implementation in Go
+![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=180&section=header&text=Conway%27s%20Game%20of%20Life&fontSize=42&fontColor=fff&animation=fadeIn&fontAlignY=32&desc=A%20High-Performance%20Concurrent%20%26%20Distributed%20Implementation%20in%20Go&descSize=18&descAlignY=52)
 
 <br>
 
@@ -14,9 +12,7 @@
 
 <br>
 
-<img alt="Game of Life Animation" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif" width="200">
-<img alt="Game of Life Glider" src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif" width="200">
-<img alt="Game of Life Beacon" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif" width="200">
+<img alt="Game of Life Animation" src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif" width="450">
 
 <br>
 
@@ -27,6 +23,8 @@
 **👨‍💻 Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • Lingyi Lu
 
 <br>
+
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Jeff-zhang921&repo=COMS20008Game-of-Life&theme=radical)](https://github.com/Jeff-zhang921/COMS20008Game-of-Life)
 
 ---
 
@@ -249,6 +247,8 @@ Our optimizations deliver **exceptional performance gains** across different wor
 ---
 
 ## 🎯 Key Design Advantages
+
+<img align="right" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_loaf.svg" width="100" alt="Loaf Pattern">
 
 <table>
 <tr>
@@ -509,6 +509,10 @@ We welcome contributions! Feel free to:
 
 <br>
 
-*Thanks for visiting! 🎮 Made with ❤️ at University of Bristol*
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3000&pause=1000&color=00ADD8&center=true&vCenter=true&width=500&lines=Thanks+for+visiting!+%F0%9F%8E%AE;Made+with+%E2%9D%A4%EF%B8%8F+at+University+of+Bristol;Go+is+awesome+for+concurrency!)
+
+
+
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=100&section=footer)
 
 </div>
