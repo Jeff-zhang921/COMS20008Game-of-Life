@@ -12,7 +12,9 @@
 
 <br>
 
-<img alt="Game of Life Animation" src="https://user-images.githubusercontent.com/7782270/143777745-d7e6fa94-64d4-4dd5-935e-bfcbe95ca52e.gif" width="450">
+<img alt="Game of Life Animation" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif" width="200">
+<img alt="Game of Life Glider" src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif" width="200">
+<img alt="Game of Life Beacon" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif" width="200">
 
 <br>
 
