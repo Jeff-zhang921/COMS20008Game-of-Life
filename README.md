@@ -250,8 +250,6 @@ Our optimizations deliver **exceptional performance gains** across different wor
 
 ## 🎯 Key Design Advantages
 
-<img align="right" src="https://upload.wikimedia.org/wikipedia/commons/f/f4/Game_of_life_loaf.gif" width="100" alt="Loaf Pattern">
-
 <table>
 <tr>
 <td width="33%" valign="top">
