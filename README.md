@@ -1,6 +1,6 @@
 <div align="center">
 
-![Header](https://capsule-render.vercel.app/api?type=waving&color=0:FF6B6B,25:4ECDC4,50:45B7D1,75:96CEB4,100:FFEAA7&height=200&section=header&text=Conway%27s%20Game%20of%20Life&fontSize=45&fontColor=fff&animation=twinkling&fontAlignY=35&desc=A%20High-Performance%20Concurrent%20%26%20Distributed%20Implementation%20in%20Go&descSize=18&descAlignY=55)
+![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,3,4,6,24,30&height=200&section=header&text=Conway%27s%20Game%20of%20Life&fontSize=45&fontColor=fff&animation=twinkling&fontAlignY=35&desc=A%20High-Performance%20Concurrent%20%26%20Distributed%20Implementation%20in%20Go&descSize=18&descAlignY=55)
 
 <br>
 
@@ -517,6 +517,6 @@ We welcome contributions! Feel free to:
 
 
 
-![Footer](https://capsule-render.vercel.app/api?type=waving&color=0:FFEAA7,25:96CEB4,50:45B7D1,75:4ECDC4,100:FF6B6B&height=120&section=footer)
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=2,3,4,6,24,30&height=120&section=footer)
 
 </div>
