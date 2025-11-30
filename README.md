@@ -1,6 +1,10 @@
 <div align="center">
 
-![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=180&section=header&text=Conway%27s%20Game%20of%20Life&fontSize=42&fontColor=fff&animation=fadeIn&fontAlignY=32&desc=A%20High-Performance%20Concurrent%20%26%20Distributed%20Implementation%20in%20Go&descSize=18&descAlignY=52)
+![Header](https://capsule-render.vercel.app/api?type=waving&color=0:FF6B6B,25:4ECDC4,50:45B7D1,75:96CEB4,100:FFEAA7&height=200&section=header&text=Conway%27s%20Game%20of%20Life&fontSize=45&fontColor=fff&animation=twinkling&fontAlignY=35&desc=A%20High-Performance%20Concurrent%20%26%20Distributed%20Implementation%20in%20Go&descSize=18&descAlignY=55)
+
+<br>
+
+![Visitor Count](https://komarev.com/ghpvc/?username=Jeff-zhang921&repo=COMS20008Game-of-Life&color=blueviolet&style=for-the-badge&label=VISITORS)
 
 <br>
 
@@ -509,10 +513,10 @@ We welcome contributions! Feel free to:
 
 <br>
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3000&pause=1000&color=00ADD8&center=true&vCenter=true&width=500&lines=Thanks+for+visiting!+%F0%9F%8E%AE;Made+with+%E2%9D%A4%EF%B8%8F+at+University+of+Bristol;Go+is+awesome+for+concurrency!)
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=18&duration=3000&pause=1000&color=FF6B6B&center=true&vCenter=true&width=500&lines=Thanks+for+visiting!+%F0%9F%8E%AE;Made+with+%E2%9D%A4%EF%B8%8F+at+University+of+Bristol;Go+is+awesome+for+concurrency!;Star+%E2%AD%90+if+you+like+it!)
 
 
 
-![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=100&section=footer)
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=0:FFEAA7,25:96CEB4,50:45B7D1,75:4ECDC4,100:FF6B6B&height=120&section=footer)
 
 </div>
