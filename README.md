@@ -18,7 +18,7 @@
 
 <br>
 
-**👨‍💻 Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • Lingyi Lu
+**Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • Lingyi Lu
 
 <br>
 
@@ -30,16 +30,16 @@
 
 <br>
 
-## ✨ Features
+##  Features
 
 > [!TIP]
-> 🎯 Our implementation achieves **9.5× speedup** over baseline through innovative flip-cell algorithms!
+>  Our implementation achieves **9.5× speedup** over baseline through innovative flip-cell algorithms!
 
 <table>
 <tr>
 <td width="50%">
 
-### 🚀 Parallel Implementation
+###  Parallel Implementation
 - **Innovative Flip-Cell Algorithm** — 88% performance boost
 - **Dynamic Workload Distribution** across goroutines
 - **Real-time SDL Visualization**
@@ -48,7 +48,7 @@
 </td>
 <td width="50%">
 
-### 🌐 Distributed Implementation
+### Distributed Implementation
 - **Broker-Worker Architecture** on AWS EC2
 - **Fault-Tolerant Design** with auto-recovery
 - **Persistent TCP Streaming** for minimal overhead
@@ -58,11 +58,9 @@
 </tr>
 </table>
 
-<br>
-
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 > [!NOTE]
 > Our implementation features a sophisticated **multi-layered architecture** designed for maximum performance and reliability.
@@ -73,7 +71,7 @@
 
 <div align="center">
 
-### 📊 Parallel Implementation Flow
+### Parallel Implementation Flow
 
 <img src="https://github.com/user-attachments/assets/f13edfc4-be45-4f8b-b94c-a13975fcc667" alt="Parallel Implementation Flow Diagram" width="90%">
 
@@ -85,7 +83,7 @@
 
 <br>
 
-### 🔄 How the Parallel Algorithm Works
+### How the Parallel Algorithm Works
 
 > [!IMPORTANT]
 > The flip-cell algorithm is our key innovation — instead of checking all cells every turn, we only check neighbors of cells that changed!
@@ -110,7 +108,7 @@
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-### 🌍 Distributed Architecture
+### Distributed Architecture
 
 ```
                     ┌─────────────────────────────────────┐
@@ -152,10 +150,10 @@
 
 ---
 
-## 📈 Performance Benchmarks
+## Performance Benchmarks
 
 > [!NOTE]
-> 📊 **Benchmark Environment**: Intel Core i7, 16GB RAM, Ubuntu 22.04
+>  **Benchmark Environment**: Intel Core i7, 16GB RAM, Ubuntu 22.04
 
 Our optimizations deliver **exceptional performance gains** across different workloads and configurations.
 
@@ -163,7 +161,7 @@ Our optimizations deliver **exceptional performance gains** across different wor
 
 <div align="center">
 
-### 🏆 Version Evolution Performance (512×512 Grid)
+### Version Evolution Performance (512×512 Grid)
 
 <img src="https://github.com/user-attachments/assets/10034665-b506-4710-b47a-9a2eada88977" alt="Version Performance Comparison" width="85%">
 
@@ -175,7 +173,7 @@ Our optimizations deliver **exceptional performance gains** across different wor
 
 <br>
 
-### 📊 Detailed Performance Analysis
+### Detailed Performance Analysis
 
 <div align="center">
 
@@ -206,7 +204,7 @@ Our optimizations deliver **exceptional performance gains** across different wor
 
 <br>
 
-### 🔬 Profiling Insights
+### Profiling Insights
 
 <div align="center">
 
@@ -220,27 +218,27 @@ Our optimizations deliver **exceptional performance gains** across different wor
 
 <br>
 
-### 📋 Development Evolution
+### Development Evolution
 
 | Version | Approach | Key Improvement | Speedup |
 |:-------:|:---------|:----------------|:-------:|
 | **V1** | Basic parallel workers with neighbor counting | Baseline implementation | 1.0× |
 | **V2** | Enhanced I/O operations | Improved file handling | 1.2× |
-| **V3** | Flip-cell neighbor tracking | Reduced computation scope | **8.8×** 🔥 |
+| **V3** | Flip-cell neighbor tracking | Reduced computation scope | **8.8×** |
 | **V4** | Efficient slice usage | Reduced GC pressure | 9.1× |
-| **Final** | Optimized goroutine coordination | Channel-based sync | **9.5×** 🚀 |
+| **Final** | Optimized goroutine coordination | Channel-based sync | **9.5×** |
 
 <br>
 
 ---
 
-## 🎯 Key Design Advantages
+## Key Design Advantages
 
 <table>
 <tr>
 <td width="33%" valign="top">
 
-### 🛡️ High Fault Tolerance
+### High Fault Tolerance
 
 - **Auto Worker Recovery**
   - Dead workers detected automatically
@@ -257,7 +255,7 @@ Our optimizations deliver **exceptional performance gains** across different wor
 </td>
 <td width="33%" valign="top">
 
-### ⚡ Minimal Overhead
+### Minimal Overhead
 
 - **Single World Transfer**
   - Full board sent only once
@@ -274,7 +272,7 @@ Our optimizations deliver **exceptional performance gains** across different wor
 </td>
 <td width="33%" valign="top">
 
-### 🔒 Privacy & Security
+### Privacy & Security
 
 - **Address Isolation**
   - Client knows only broker
@@ -296,7 +294,7 @@ Our optimizations deliver **exceptional performance gains** across different wor
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 > [!CAUTION]
 > Make sure you have **Go 1.17+** and **SDL2** installed before running the project!
@@ -359,7 +357,7 @@ go run . -t 8 -w 512 -h 512
 
 <br>
 
-### 🎛️ Command Line Flags
+### Command Line Flags
 
 | Flag | Description | Default |
 |:----:|:------------|:-------:|
@@ -373,12 +371,12 @@ go run . -t 8 -w 512 -h 512
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 🎮 COMS20008Game-of-Life/
 │
-├── 🔄 Parallel/                    # Single-machine parallel implementation
+├── Parallel/                    # Single-machine parallel implementation
 │   ├── gol/                        # Core game logic
 │   │   ├── distributor.go          # Main coordinator
 │   │   └── gol.go                  # Game rules & worker management
@@ -387,7 +385,7 @@ go run . -t 8 -w 512 -h 512
 │   ├── out/                        # Output directory
 │   └── tests/                      # Test suite
 │
-├── 🌐 Distributed/                 # Multi-machine distributed implementation
+├── Distributed/                 # Multi-machine distributed implementation
 │   ├── gol/                        # Client-side distributor
 │   ├── broker/                     # Central coordinator (AWS)
 │   ├── server/                     # Worker nodes (AWS)
@@ -397,18 +395,18 @@ go run . -t 8 -w 512 -h 512
 │   ├── out/                        # Output directory
 │   └── tests/                      # Test suite
 │
-├── 📄 docs/                        # Documentation
+├── docs/                        # Documentation
 │   ├── GOL.pptx                    # Presentation slides
 │   └── report.pdf                  # Technical report
 │
-└── 📜 LICENSE                      # MIT License
+└── LICENSE                      # MIT License
 ```
 
 <br>
 
 ---
 
-## 🧪 Testing
+## Testing
 
 > [!TIP]
 > Always run tests with `-race` flag to detect potential race conditions in concurrent code!
@@ -429,7 +427,7 @@ go test -v -race ./...
 
 ---
 
-## 💡 Key Learnings
+## Key Learnings
 
 <div align="center">
 
@@ -437,10 +435,10 @@ go test -v -race ./...
 
 | Insight | Description |
 |:--------|:------------|
-| 🎯 **Parallelism Has Costs** | Coordination overhead can negate benefits for small workloads |
-| 📡 **Network Latency Matters** | Distributed systems require careful architectural decisions |
-| 🛡️ **Fault Tolerance Works** | With proper design, systems gracefully handle node failures |
-| ⚡ **Algorithm > Hardware** | The flip-cell optimization outperforms adding more threads |
+| **Parallelism Has Costs** | Coordination overhead can negate benefits for small workloads |
+| **Network Latency Matters** | Distributed systems require careful architectural decisions |
+| **Fault Tolerance Works** | With proper design, systems gracefully handle node failures |
+| **Algorithm > Hardware** | The flip-cell optimization outperforms adding more threads |
 
 </div>
 
@@ -456,14 +454,14 @@ go test -v -race ./...
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 > [!NOTE]
-> 📖 Check out our detailed technical report for in-depth analysis of the implementation!
+> Check out our detailed technical report for in-depth analysis of the implementation!
 
-- 📖 [Official GOL Documentation](https://uob-csa.github.io/gol-docs/)
-- 📊 [Project Presentation](docs/GOL.pptx)
-- 📝 [Technical Report](docs/report.pdf)
+- [Official GOL Documentation](https://uob-csa.github.io/gol-docs/)
+- [Project Presentation](docs/GOL.pptx)
+- [Technical Report](docs/report.pdf)
 
 <br>
 
@@ -471,27 +469,15 @@ go test -v -race ./...
 
 <div align="center">
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-<br>
-
-### 🤝 Contributing
-
-We welcome contributions! Feel free to:
-- ⭐ Star this repository
-- 🐛 Report bugs
-- 💡 Suggest new features
-- 🔀 Submit pull requests
-
-<br>
 
 ---
 
 <br>
 
-**⭐ Star this repo if you found it helpful!**
+**Star this repo if you found it helpful!**
 
 
 <br>
