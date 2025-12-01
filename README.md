@@ -18,18 +18,6 @@
 
 <br>
 
-<img alt="Game of Life Blinker" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Game_of_life_blinker.gif" width="100">
-<img alt="Game of Life Glider" src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Game_of_life_animated_glider.gif" width="100">
-<img alt="Game of Life Pulsar" src="https://upload.wikimedia.org/wikipedia/commons/0/07/Game_of_life_pulsar.gif" width="150">
-<img alt="Game of Life Beacon" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_beacon.gif" width="100">
-<img alt="Game of Life Toad" src="https://upload.wikimedia.org/wikipedia/commons/1/12/Game_of_life_toad.gif" width="100">
-
-<br>
-
-### ✨ *Experience the mesmerizing patterns of cellular automaton with lightning-fast parallel processing* ✨
-
-<br>
-
 **👨‍💻 Authors**: [Jingxiang Zhang](https://github.com/Jeff-zhang921) • Lingyi Lu
 
 <br>
@@ -69,14 +57,6 @@
 </td>
 </tr>
 </table>
-
-<div align="center">
-
-![Gosper Glider Gun](https://upload.wikimedia.org/wikipedia/commons/e/e5/Gospers_glider_gun.gif)
-
-*Gosper's Glider Gun — a classic pattern that produces gliders indefinitely*
-
-</div>
 
 <br>
 
@@ -513,11 +493,8 @@ We welcome contributions! Feel free to:
 
 **⭐ Star this repo if you found it helpful!**
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Jeff-zhang921/COMS20008Game-of-Life&type=Date)](https://star-history.com/#Jeff-zhang921/COMS20008Game-of-Life&Date)
 
 <br>
-
-![Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=Jeff-zhang921&theme=react-dark&hide_border=true&area=true)
 
 <br>
 
