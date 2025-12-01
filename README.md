@@ -34,8 +34,6 @@
 
 <br>
 
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=Jeff-zhang921&repo=COMS20008Game-of-Life&theme=radical)](https://github.com/Jeff-zhang921/COMS20008Game-of-Life)
-
 ---
 
 [Features](#-features) • [Architecture](#-architecture) • [Performance](#-performance-benchmarks) • [Quick Start](#-quick-start) • [Documentation](#-documentation)
@@ -257,8 +255,6 @@ Our optimizations deliver **exceptional performance gains** across different wor
 ---
 
 ## 🎯 Key Design Advantages
-
-<img align="right" src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Game_of_life_loaf.svg" width="100" alt="Loaf Pattern">
 
 <table>
 <tr>
