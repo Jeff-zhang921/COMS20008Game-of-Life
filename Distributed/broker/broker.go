@@ -220,6 +220,7 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 				if sendsRow < 0 {
 					rowneed := sendeRow - sendsRow
 					buf := topBuf[:rowneed]
+					//set buf 0 as last line
 					copy(buf[0], Before[y-1])
 					for i := 0; i < sendeRow; i++ {
 						copy(buf[i+1], Before[i])
@@ -446,6 +447,7 @@ func (b *Broker) Run(request stubs.BrokerInput, response *stubs.BrokerInit) erro
 	defer runlock.Unlock()
 
 	keys := make(chan rune, 64)
+	//initiate
 	handlekeyinrunout = keys
 	for _, k := range keyBuffer {
 		handlekeyinrunout <- k
@@ -494,7 +496,9 @@ Workerfail:
 	
 	rowsPerWorker := (y + workernode - 1) / workernode
 	rowneed := rowsPerWorker + 2
+	//when sendsRow < 0
 	topBuf := make([][]uint8, rowneed)
+	//when sendsRow > 0
 	bottomBuf := make([][]uint8, rowneed)
 	for i := range topBuf {
 		topBuf[i] = make([]uint8, x)
@@ -616,6 +620,7 @@ Workerfail:
 }
 
 func main() {
+
 	ln, err := net.Listen("tcp", ":8032")
 	if err != nil {
 		log.Fatalf("failed to listen on %s: %v", ":8032", err)

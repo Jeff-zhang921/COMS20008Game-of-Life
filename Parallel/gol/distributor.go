@@ -1,9 +1,8 @@
 package gol
-
+//distributor get the command first
 import (
 	"fmt"
 	"time"
-
 	"uk.ac.bris.cs/gameoflife/util"
 )
 
@@ -121,15 +120,14 @@ func worker(jobs <-chan Input, result chan<- workerResult) {
 						}
 					}
 				}
-				var next uint8
-				if job.Before[i][j] == 255 && (sum == 2 || sum == 3) || (job.Before[i][j] == 0 && sum == 3) {
-					next = 255
-				} else {
-					next = 0
-				}
-				if job.Before[i][j] != next {
+			//	var next uint8
+				if (job.Before[i][j] == 0 && sum == 3) {
+				flips = append(flips, util.Cell{X: j, Y: i})
+				} else if(job.Before[i][j]==255&&!(sum==2||sum==3)){
 					flips = append(flips, util.Cell{X: j, Y: i})
+				}else {
 				}
+				
 			}
 		}
 		result <- workerResult{changes: flips}
@@ -142,8 +140,11 @@ func distributor(p Params, events chan<- Event, keyPresses <-chan rune, ioShared
 
 	x := p.ImageWidth
 	y := p.ImageHeight
-
+	//behold different from semiphore!!
 	ioShared.mu.Lock()
+	for !ioShared.isIdle {
+    ioShared.cond.Wait() // 等槽位空闲
+}
 	ioShared.filename = fmt.Sprintf("%dx%d", x, y)
 	ioShared.command = ioInput
 	ioShared.isIdle = false
@@ -152,6 +153,7 @@ func distributor(p Params, events chan<- Event, keyPresses <-chan rune, ioShared
 	ioShared.cond.Signal()
 
 	for !ioShared.isIdle {
+		//will release the lock
 		ioShared.cond.Wait()
 	}
 	ioShared.mu.Unlock()

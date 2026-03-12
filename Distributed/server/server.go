@@ -225,6 +225,7 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 	//broker send startrow and endrow and partial before
 	var flip []util.Cell
 	if req.Whichturn == 1 {
+		//same whole size before but only update part
 		Before = req.Before
 		flip = workturn1(req)
 	} else {
@@ -243,9 +244,7 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 				for i := req.Start - 1; i < req.End; i++ {
 					copy(Before[i], req.Before[i-(req.Start-2)])
 				}
-
 			}
-
 		} else {
 			Before = req.Before
 		}
@@ -273,5 +272,6 @@ func main() {
 	defer conn.Close()
 	//serveconn make this connection to rpc receiver
 	rpc.ServeConn(conn)
+	
 
 }
