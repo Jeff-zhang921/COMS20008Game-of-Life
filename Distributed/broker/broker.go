@@ -404,6 +404,7 @@ func dealingkeypress(encode *gob.Encoder, turn int, Before [][]uint8, quit bool,
 
 type Broker struct{}
 
+
 // handle key rpc handle key from distributor send to run
 func (b *Broker) Handlekey(key rune, _ *stubs.Void) error {
 	//if run didn't start, keybuffer keep the key and after run start give run
@@ -621,13 +622,14 @@ Workerfail:
 
 func main() {
 
+	
 	ln, err := net.Listen("tcp", ":8032")
 	if err != nil {
 		log.Fatalf("failed to listen on %s: %v", ":8032", err)
 	}
 	streamListener = ln
 
-	//register rpc
+	//register rpc,using pointer
 	Brokers := new(Broker)
 	errros := rpc.Register(Brokers)
 	if errros != nil {
@@ -639,6 +641,7 @@ func main() {
 		log.Fatalf("failed to listen on %s: %v", ":8030", err)
 	}
 	defer listener1.Close()
+	//rpc.Accept is a blocking server loop
 	go rpc.Accept(listener1)
 
 	//listen to worker connect

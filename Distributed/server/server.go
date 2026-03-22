@@ -58,14 +58,16 @@ func workturn1(jobs stubs.Input) []util.Cell {
 
 	width := len(Before[1])
 	height := len(Before)
-	if jobs.Thread > height {
-		jobs.Thread = height
-	}
+
 	if jobs.Thread <= 0 {
 		return nil
 	}
+	
 
 	rows := jobs.End - jobs.Start
+	if jobs.Thread > rows {
+    jobs.Thread = rows
+}
 
 	chunk := (rows + jobs.Thread - 1) / jobs.Thread
 
@@ -257,7 +259,7 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 }
 
 func main() {
-	brokerAddr := flag.String("broker", "52.201.7.150:8030", "broker rpc address")
+	brokerAddr := flag.String("broker", ":8030", "broker rpc address")
 	flag.Parse()
 	w := new(Workers)
 	err := rpc.Register(w)

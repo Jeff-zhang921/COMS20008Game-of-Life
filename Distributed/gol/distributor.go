@@ -6,7 +6,6 @@ import (
 	"log"
 	"net"
 	"net/rpc"
-
 	"uk.ac.bris.cs/gameoflife/stubs"
 	"uk.ac.bris.cs/gameoflife/util"
 )
@@ -23,7 +22,7 @@ type distributorChannels struct {
 
 // distributor divides the work between workers and interacts with other goroutines.
 func distributor(p Params, c distributorChannels) {
-	BrokerAddr := "52.201.7.150:8030"
+	BrokerAddr := "localhost:8030"
 
 	x := p.ImageWidth
 	y := p.ImageHeight
@@ -76,7 +75,7 @@ func distributor(p Params, c distributorChannels) {
 	accept := stubs.BrokerInit{}
 	client.Go(stubs.Run, args, &accept, nil)
 
-	conn, err := net.Dial("tcp", "52.201.7.150:8032")
+	conn, err := net.Dial("tcp", ":8032")
 	log.Println("distributor connected to broker stream at:", conn.RemoteAddr())
 	if err != nil {
 		log.Printf("failed to dial broker stream: %v", err)
