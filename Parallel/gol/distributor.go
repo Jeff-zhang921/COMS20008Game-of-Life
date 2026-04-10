@@ -143,7 +143,7 @@ func distributor(p Params, events chan<- Event, keyPresses <-chan rune, ioShared
 	//behold different from semiphore!!
 	ioShared.mu.Lock()
 	for !ioShared.isIdle {
-    ioShared.cond.Wait() // 等槽位空闲
+    ioShared.cond.Wait() 
 }
 	ioShared.filename = fmt.Sprintf("%dx%d", x, y)
 	ioShared.command = ioInput

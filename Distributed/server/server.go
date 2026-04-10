@@ -65,9 +65,7 @@ func workturn1(jobs stubs.Input) []util.Cell {
 	
 
 	rows := jobs.End - jobs.Start
-	if jobs.Thread > rows {
-    jobs.Thread = rows
-}
+	
 
 	chunk := (rows + jobs.Thread - 1) / jobs.Thread
 

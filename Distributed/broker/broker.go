@@ -1,6 +1,5 @@
-//divide by 0
-//threadforworker more even
-
+// divide by 0
+// threadforworker more even
 package main
 
 import (
@@ -16,11 +15,12 @@ import (
 	"uk.ac.bris.cs/gameoflife/util"
 )
 
-
-var handlekeyinrunout chan rune
-var keyBuffer []rune
-var streamListener net.Listener
-var WorkerAddr []*rpc.Client
+var (
+	handlekeyinrunout chan rune
+	keyBuffer         []rune
+	streamListener    net.Listener
+	WorkerAddr        []*rpc.Client
+)
 
 // lock is use when write to wrokeraddr
 var lock sync.Mutex
@@ -29,8 +29,9 @@ var lock sync.Mutex
 var flaglock sync.Mutex
 
 var runlock sync.Mutex
+var distributelock sync.Mutex
 
-func allocatethreadtoworker(thread int, clients []*rpc.Client, threadperworker []int) (bool, []int, int) {
+func allocatethreadtoworker(thread int, clients []*rpc.Client, threadperworker []int, fixedworker []*rpc.Client) (bool, []int, int) {
 	workernode := len(clients)
 	if workernode == 0 {
 		return false, threadperworker, 0
@@ -42,12 +43,12 @@ func allocatethreadtoworker(thread int, clients []*rpc.Client, threadperworker [
 			workernode = 1
 		}
 		for i := 0; i < workernode; i++ {
-			clients[i] = WorkerAddr[i]
+			clients[i] = fixedworker[i]
 			threadperworker[i] = 1
 		}
 	} else {
 		for i := 0; i < workernode; i++ {
-			clients[i] = WorkerAddr[i]
+			clients[i] = fixedworker[i]
 		}
 		total := thread
 		base := total / workernode
@@ -65,11 +66,11 @@ func allocatethreadtoworker(thread int, clients []*rpc.Client, threadperworker [
 			threadperworker[i] = size
 		}
 	}
-	
+
 	return true, threadperworker, workernode
 }
 
-//calculate live cells in current world
+// calculate live cells in current world
 func liveCells(world [][]uint8, x int, y int) []util.Cell {
 	cells := make([]util.Cell, 0)
 	for i := 0; i < y; i++ {
@@ -105,7 +106,7 @@ func getNeighbor(ce util.Cell, nextChange [][]bool, nextList []util.Cell, x int,
 	return nextList
 }
 
-//nextlist->thislist
+// nextlist->thislist
 func rollList(thisList []util.Cell, nextList []util.Cell, nextChange [][]bool) ([]util.Cell, []util.Cell, [][]bool) {
 	thisList = thisList[:0]
 	thisList = append(thisList, nextList...)
@@ -127,7 +128,7 @@ func turn1(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 
 	for i := 0; i < workernode; i++ {
 		thread := threadperworker[i]
-		//allocate rows to each worker
+		// allocate rows to each worker
 		startRow := rowsPerWorker * i
 		endRow := startRow + rowsPerWorker
 		if startRow > y {
@@ -137,7 +138,7 @@ func turn1(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 			endRow = y
 		}
 		wg.Add(1)
-		//worker only response to work on the field require
+		// worker only response to work on the field require
 		inputting := stubs.Input{
 			Start:     startRow,
 			End:       endRow,
@@ -166,12 +167,11 @@ func turn1(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 }
 
 func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clients []*rpc.Client, results chan []util.Cell, thisList []util.Cell, turn int, topBuf, bottomBuf [][]uint8) (int, int, bool) {
-
 	var wg sync.WaitGroup
 	send := 0
 	flag := false
 	deadWorker := -1
-	//evenly divided
+	// evenly divided
 	rowsPerWorker := (y + workernode - 1) / workernode
 
 	n := len(thisList)
@@ -194,7 +194,6 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 			wg.Add(1)
 
 			if workernode == 1 {
-
 				input = stubs.Input{
 					Thislists: thisList,
 					Start:     0,
@@ -220,7 +219,7 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 				if sendsRow < 0 {
 					rowneed := sendeRow - sendsRow
 					buf := topBuf[:rowneed]
-					//set buf 0 as last line
+					// set buf 0 as last line
 					copy(buf[0], Before[y-1])
 					for i := 0; i < sendeRow; i++ {
 						copy(buf[i+1], Before[i])
@@ -259,7 +258,7 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 				defer wg.Done()
 				var resp stubs.WorkerResult
 				errors := clients[workernodes].Call(stubs.Work, req, &resp)
-				
+
 				if errors != nil {
 					flaglock.Lock()
 					flag = true
@@ -314,7 +313,6 @@ func dealingkeypress(encode *gob.Encoder, turn int, Before [][]uint8, quit bool,
 				LiveCount:    liveCells(Before, x, y),
 			})
 			if err != nil {
-
 			}
 			key := stubs.Input{Key: 'k'}
 			for val := range clients {
@@ -404,16 +402,15 @@ func dealingkeypress(encode *gob.Encoder, turn int, Before [][]uint8, quit bool,
 
 type Broker struct{}
 
-
 // handle key rpc handle key from distributor send to run
 func (b *Broker) Handlekey(key rune, _ *stubs.Void) error {
-	//if run didn't start, keybuffer keep the key and after run start give run
+	// if run didn't start, keybuffer keep the key and after run start give run
 	if handlekeyinrunout == nil {
 		keyBuffer = append(keyBuffer, key)
 		return nil
 	}
 
-	//put key to the channel
+	// put key to the channel
 	handlekeyinrunout <- key
 	return nil
 }
@@ -425,8 +422,8 @@ func (b *Broker) Handlekey(key rune, _ *stubs.Void) error {
 // if a workernode dead, it will set flag to true no matter which dead, and reallocate work to alive worker, rerun this turn
 // in server, for one workernode, it receive the start of job and end of job, and the thread it will use to
 // allocate each logic worker, with most even work.
-func (b *Broker) Run(request stubs.BrokerInput, response *stubs.BrokerInit) error {
 
+func (b *Broker) Run(request stubs.BrokerInput, response *stubs.BrokerInit) error {
 	conn, err := streamListener.Accept()
 	if err != nil {
 		return err
@@ -448,7 +445,7 @@ func (b *Broker) Run(request stubs.BrokerInput, response *stubs.BrokerInit) erro
 	defer runlock.Unlock()
 
 	keys := make(chan rune, 64)
-	//initiate
+	// initiate
 	handlekeyinrunout = keys
 	for _, k := range keyBuffer {
 		handlekeyinrunout <- k
@@ -465,41 +462,59 @@ func (b *Broker) Run(request stubs.BrokerInput, response *stubs.BrokerInit) erro
 	ticker := time.NewTicker(2 * time.Second)
 	defer ticker.Stop()
 
-	//call once instead of mutiple time
-	//allocate how many to call and size of thread for each
+	// call once instead of mutiple time
+	// allocate how many to call and size of thread for each
 
 	currentturn := make(chan int, 2)
-	//the dead worker at nth position of workeraddr
-	var deadWorker = -1
+	// the dead worker at nth position of workeraddr
+	deadWorker := -1
 
 	quit := false
 
 	log.Println("broker started run")
-
+	distributelock.Lock()
+	currworker := len(WorkerAddr)
+	distributelock.Unlock()
 Workerfail:
-// log.Println("worker fail handling at turn")
+	// log.Println("worker fail handling at turn")
 	results := make(chan []util.Cell, 1024)
 	if deadWorker != -1 {
+		distributelock.Lock()
 		WorkerAddr = append(WorkerAddr[:deadWorker], WorkerAddr[deadWorker+1:]...)
+		deadWorker = -1
+		distributelock.Unlock()
 	}
+	distributelock.Lock()
+
 	lens := len(WorkerAddr)
+	//this is needed to prevent during the turn it workeraddr add one more
+	fixedworker := make([]*rpc.Client, lens)
+
+	copy(fixedworker, WorkerAddr)
+	if lens != currworker {
+		currworker = lens
+	}
+	distributelock.Unlock()
 
 	clients := make([]*rpc.Client, lens)
 
 	var workernode int
 	threadperworker := make([]int, lens)
-	success, threadperworker, workernode := allocatethreadtoworker(request.Thread, clients, threadperworker)
+	success, threadperworker, workernode := allocatethreadtoworker(request.Thread, clients, threadperworker, fixedworker)
 
 	if !success {
+		if len(fixedworker) == 0 {
+			os.Exit(0)
+		}
 		log.Println("unsuccessful allocate thread to worker")
 		goto Workerfail
 	}
-	
+
 	rowsPerWorker := (y + workernode - 1) / workernode
 	rowneed := rowsPerWorker + 2
-	//when sendsRow < 0
+	// when sendsRow < 0
 	topBuf := make([][]uint8, rowneed)
-	//when sendsRow > 0
+	// when sendsRow > 0
 	bottomBuf := make([][]uint8, rowneed)
 	for i := range topBuf {
 		topBuf[i] = make([]uint8, x)
@@ -524,15 +539,18 @@ Workerfail:
 		}
 		flips = flips[:0]
 
-		//every turn do
-		if flag {
+		// every turn do
+		distributelock.Lock()
+		if flag || currworker != len(WorkerAddr) {
 			currentturn <- turn
 			for len(results) > 0 {
 				<-results
 			}
 			log.Println("worker fail,redo turn ", turn)
+			distributelock.Unlock()
 			goto Workerfail
 		}
+		distributelock.Unlock()
 
 		for i := 0; i < send; i++ {
 			res := <-results
@@ -564,7 +582,7 @@ Workerfail:
 			break
 		}
 
-		//update world
+		// update world
 		for _, cell := range flips {
 			if Before[cell.Y][cell.X] == 255 {
 				Before[cell.Y][cell.X] = 0
@@ -614,37 +632,35 @@ Workerfail:
 		return err
 	}
 
-	//when every turn finish make sure all is close cleanly
+	// when every turn finish make sure all is close cleanly
 	handlekeyinrunout = nil
 	keyBuffer = keyBuffer[:0]
 	return nil
 }
 
 func main() {
-
-	
 	ln, err := net.Listen("tcp", ":8032")
 	if err != nil {
 		log.Fatalf("failed to listen on %s: %v", ":8032", err)
 	}
 	streamListener = ln
 
-	//register rpc,using pointer
+	// register rpc,using pointer
 	Brokers := new(Broker)
 	errros := rpc.Register(Brokers)
 	if errros != nil {
 		log.Fatalf("failed to register broker RPC: %v", err)
 	}
-	//listen to distributor rpc call
+	// listen to distributor rpc call
 	listener1, err := net.Listen("tcp", ":8030")
 	if err != nil {
 		log.Fatalf("failed to listen on %s: %v", ":8030", err)
 	}
 	defer listener1.Close()
-	//rpc.Accept is a blocking server loop
+	// rpc.Accept is a blocking server loop
 	go rpc.Accept(listener1)
 
-	//listen to worker connect
+	// listen to worker connect
 	listener2, err := net.Listen("tcp", ":8050")
 	if err != nil {
 		log.Fatalf("failed to listen on %s: %v", ":8050", err)
@@ -654,14 +670,18 @@ func main() {
 	for {
 		lock.Lock()
 		conn, err := listener2.Accept()
-		log.Println("[Broker]: Worker connected:", conn.RemoteAddr().String())
+
 		if err != nil {
 			log.Printf("failed to accept connection: %v", err)
+			lock.Unlock()
 			continue
 		}
-		//upgrade to rpc client
-	client := rpc.NewClient(conn)
-	WorkerAddr = append(WorkerAddr, client)
-	   lock.Unlock()
-	}	
+		log.Println("[Broker]: Worker connected:", conn.RemoteAddr().String())
+		// upgrade to rpc client
+		client := rpc.NewClient(conn)
+		distributelock.Lock()
+		WorkerAddr = append(WorkerAddr, client)
+		distributelock.Unlock()
+		lock.Unlock()
+	}
 }
