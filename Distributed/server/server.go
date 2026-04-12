@@ -56,7 +56,7 @@ func workturn1(jobs stubs.Input) []util.Cell {
 		return next, next != Before[i][j]
 	}
 
-	width := len(Before[1])
+	width := len(Before[0])
 	height := len(Before)
 
 	if jobs.Thread <= 0 {
@@ -114,7 +114,7 @@ func workturn1(jobs stubs.Input) []util.Cell {
 // worker and distributor using channel to communicate
 func worker(jobs stubs.Input) []util.Cell {
 
-	width := len(Before[1])
+	width := len(Before[0])
 	height := len(Before)
 
 	thisList := []util.Cell{}
@@ -241,10 +241,11 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 		Before = req.Before
 		flip = workturn1(req)
 	} else {
-		if Before == nil {
+		fullWorld := req.Start == 0 && req.End == req.Height && len(req.Before) == req.Height
+		if fullWorld {
+			Before = req.Before
+		} else {
 			ensureBefore(req.Width, req.Height)
-		}
-		if len(Before) != len(req.Before) {
 			if req.Start != 0 && req.End != len(Before) {
 				for i := req.Start - 1; i < req.End+1; i++ {
 					copy(Before[i], req.Before[i-(req.Start-1)])
@@ -260,8 +261,6 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 					copy(Before[i], req.Before[i-(req.Start-2)])
 				}
 			}
-		} else {
-			Before = req.Before
 		}
 
 		flip = worker(req)
@@ -272,7 +271,7 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 }
 
 func main() {
-	brokerAddr := flag.String("broker", ":8050", "broker rpc address")
+	brokerAddr := flag.String("broker", ":8050", "broker worker address")
 	flag.Parse()
 	w := new(Workers)
 	err := rpc.Register(w)

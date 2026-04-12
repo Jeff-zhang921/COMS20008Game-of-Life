@@ -1,5 +1,7 @@
 package gol
 //distributor get the command first
+// go test ./tests -run '^$' -bench BenchmarkGol -cpuprofile cpu.out
+// go tool pprof -http=:1234 cpu.out
 import (
 	"fmt"
 	"time"
