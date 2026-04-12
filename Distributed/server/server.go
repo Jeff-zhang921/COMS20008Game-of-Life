@@ -62,10 +62,8 @@ func workturn1(jobs stubs.Input) []util.Cell {
 	if jobs.Thread <= 0 {
 		return nil
 	}
-	
 
 	rows := jobs.End - jobs.Start
-	
 
 	chunk := (rows + jobs.Thread - 1) / jobs.Thread
 
@@ -216,6 +214,19 @@ func worker(jobs stubs.Input) []util.Cell {
 type Workers struct {
 }
 
+func ensureBefore(width, height int) {
+	if width <= 0 || height <= 0 {
+		return
+	}
+	if len(Before) == height && height > 0 && len(Before[0]) == width {
+		return
+	}
+	Before = make([][]uint8, height)
+	for i := 0; i < height; i++ {
+		Before[i] = make([]uint8, width)
+	}
+}
+
 func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 	// log.Println("current turn  ", req.Whichturn)
 	if req.Key == 'k' {
@@ -226,9 +237,13 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 	var flip []util.Cell
 	if req.Whichturn == 1 {
 		//same whole size before but only update part
+		ensureBefore(req.Width, req.Height)
 		Before = req.Before
 		flip = workturn1(req)
 	} else {
+		if Before == nil {
+			ensureBefore(req.Width, req.Height)
+		}
 		if len(Before) != len(req.Before) {
 			if req.Start != 0 && req.End != len(Before) {
 				for i := req.Start - 1; i < req.End+1; i++ {
@@ -257,7 +272,7 @@ func (w *Workers) Working(req stubs.Input, resp *stubs.WorkerResult) error {
 }
 
 func main() {
-	brokerAddr := flag.String("broker", ":8030", "broker rpc address")
+	brokerAddr := flag.String("broker", ":8050", "broker rpc address")
 	flag.Parse()
 	w := new(Workers)
 	err := rpc.Register(w)
@@ -272,6 +287,5 @@ func main() {
 	defer conn.Close()
 	//serveconn make this connection to rpc receiver
 	rpc.ServeConn(conn)
-	
 
 }

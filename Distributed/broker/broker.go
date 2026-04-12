@@ -123,6 +123,11 @@ func turn1(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 	flag := false
 	deadWorker := -1
 	rowsPerWorker := (y + workernode - 1) / workernode
+	height := len(Before)
+	width := 0
+	if height > 0 {
+		width = len(Before[0])
+	}
 
 	send = 0
 
@@ -140,6 +145,8 @@ func turn1(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 		wg.Add(1)
 		// worker only response to work on the field require
 		inputting := stubs.Input{
+			Width:     width,
+			Height:    height,
 			Start:     startRow,
 			End:       endRow,
 			Before:    Before,
@@ -173,13 +180,17 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 	deadWorker := -1
 	// evenly divided
 	rowsPerWorker := (y + workernode - 1) / workernode
+	height := len(Before)
+	width := 0
+	if height > 0 {
+		width = len(Before[0])
+	}
 
 	n := len(thisList)
 
 	if n > 0 {
 		send = 0
 		for i := 0; i < workernode; i++ {
-
 			thread := threadperworker[i]
 
 			startRow := rowsPerWorker * i
@@ -195,6 +206,8 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 
 			if workernode == 1 {
 				input = stubs.Input{
+					Width:     width,
+					Height:    height,
 					Thislists: thisList,
 					Start:     0,
 					End:       len(Before),
@@ -207,6 +220,8 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 				sendeRow := endRow + 1
 				if sendsRow > 0 && sendeRow < y {
 					input = stubs.Input{
+						Width:     width,
+						Height:    height,
 						Thislists: thisList,
 						Start:     startRow,
 						End:       endRow,
@@ -225,6 +240,8 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 						copy(buf[i+1], Before[i])
 					}
 					input = stubs.Input{
+						Width:     width,
+						Height:    height,
 						Thislists: thisList,
 						Start:     startRow,
 						End:       endRow,
@@ -243,6 +260,8 @@ func turnX(y int, workernode int, threadperworker []int, Before [][]uint8, clien
 					copy(buf[0], Before[0])
 					//	sendeRow=1
 					input = stubs.Input{
+						Width:     width,
+						Height:    height,
 						Thislists: thisList,
 						Start:     startRow,
 						End:       endRow,

@@ -1,7 +1,6 @@
 package stubs
 
 import (
-
 	"uk.ac.bris.cs/gameoflife/util"
 )
 
@@ -12,22 +11,20 @@ var Work string = "Workers.Working"
 var Register string = "Broker.Register"
 
 type RegisterRequest struct {
-    Addr string
+	Addr string
 }
 
-
-type Void struct{
+type Void struct {
 }
 type BrokerInit struct {
-
 }
 
 type BrokerInput struct {
-	Width      int
-	Height     int
-	Turns      int
-	Thread     int
-	Data       []uint8
+	Width  int
+	Height int
+	Turns  int
+	Thread int
+	Data   []uint8
 }
 
 type Instruct struct {
@@ -44,19 +41,19 @@ type Instruct struct {
 	Out          []uint8
 }
 
-//this is for broker and worker
+// this is for broker and worker
 type WorkerResult struct {
 	Changes []util.Cell
-
 }
 
 type Input struct {
-	Key       rune 
+	Key       rune
+	Width     int
+	Height    int
 	Start     int
 	End       int
 	Thislists []util.Cell
 	Before    [][]uint8
 	Whichturn int
-	Thread int
-
+	Thread    int
 }
