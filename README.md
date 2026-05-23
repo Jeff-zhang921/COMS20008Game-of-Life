@@ -411,29 +411,6 @@ go test -v -race ./...
 
 <br>
 
----
-
-## Key Learnings
-
-<div align="center">
-
-> *"The flip-cell optimization taught us that clever algorithms can outperform brute-force parallelism"*
-
-| Insight | Description |
-|:--------|:------------|
-| **Parallelism Has Costs** | Coordination overhead can negate benefits for small workloads |
-| **Network Latency Matters** | Distributed systems require careful architectural decisions |
-| **Fault Tolerance Works** | With proper design, systems gracefully handle node failures |
-| **Algorithm > Hardware** | The flip-cell optimization outperforms adding more threads |
-
-</div>
-
-
-
-<br>
-
----
-
 ## Documentation
 
 > [!NOTE]
